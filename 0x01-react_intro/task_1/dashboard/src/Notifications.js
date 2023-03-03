@@ -1,5 +1,5 @@
 imort React from 'react';
-import './Notifications.js'
+import './Notifications.css'
 
 export default function Notifications () {
   return (
