@@ -1,21 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Notifications from './Notifications/Notifications';
-import Header from './Header/Header';
-import Login from './Login/Login';
-import Footer from './Footer/Footer';
-import CourseList from './CourseList/CourseList';
+import Notifications from './Notifications';
+import Header from './Header';
+import Login from './Login';
+import CourseList from './CourseList';
+import Footer from './Footer';
 import './App.css';
-
 
 class App extends React.Component {
   static propTypes = {
     isLoggedIn: PropTypes.bool,
+    logOut: PropTypes.func,
   };
   
   static defaultProps = {
     isLoggedIn: false,
+    logOut: () => {},
   };
+
+  componentDidMount() {
+    document.addEventListener('keydown', this.handleKeyDown);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleKeyDown);
+  }
+
+  handleKeyDown = (event) => {
+    if (event.ctrlKey && event.key === 'h') {
+      alert('Logging you out');
+      this.props.logOut();
+    }
+  }
 
   render() {
     const { isLoggedIn } = this.props;
