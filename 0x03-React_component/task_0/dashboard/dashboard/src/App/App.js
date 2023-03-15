@@ -1,33 +1,28 @@
-import './App.css'
-import Header from './components/Header';
-import Notifications from './components/Notifications';
-import Login from './components/Login';
-import Footer from './components/Footer';
-import PropTypes from 'prop-types';
-import CourseList from '.components/CourseList';
+import React from 'react';
+import Notifications from './Notifications/Notifications';
+import Header from './Header/Header';
+import Login from './Login/Login';
+import Footer from './Footer/Footer';
+import CourseList from './CourseList/CourseList';
+import './App.css';
 
-export default function App(props) {
-  const { isLoggedIn } = props;
-  const listCourses = [
-    { id: 1, name: 'ES6', credit: 60 },
-    { id: 2, name: 'Webpack', credit: 20 },
-    { id: 3, name: 'React', credit: 40 }
-  ];
-  return (
-    <div>
-      <Notifications />
-      <Header />
-     {isLoggedIn ? <CourseList /> : <Login />}
-     <CourseList listCourses={listCourses} />
-      <Footer />
-    </div>
-  )
+class App extends React.Component {
+  render () {
+    return (
+      <React.Fragment>
+        <Notifications />
+        <div className="App">
+          <Header />
+          { !this.props.isLoggedIn ? <Login /> : <CourseList /> }
+          <Footer />
+        </div>
+      </React.Fragment>
+    );
+  }
 }
 
-App.propTypes = {
-isLoggedIn: PropTypes.bool,
-};
-
 App.defaultProps = {
-isLoggedIn: false,
-};
+  isLoggedIn: false
+}
+
+export default App;
