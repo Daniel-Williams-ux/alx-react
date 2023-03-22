@@ -1,41 +1,122 @@
-import React from "react";
+import  React from 'react';
 import { StyleSheet, css } from "aphrodite";
 
-function Login() {
-  return (
-    <div className={css(styles.login)}>
-      <p>Login to access the full dashboard</p>
-      <label htmlFor="email">Email:</label>
-      <input type="email" id="email" className={css(styles.loginInput)} />
-      <label htmlFor="password">Password:</label>
-      <input type="password" id="password" className={css(styles.loginInput)} />
-      <button>OK</button>
-    </div>
-  );
+class Login extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			isLoggedIn: false,
+			email: '',
+			password: '',
+			enableSumit: false
+		};
+		this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
+		this.handleChangeEmail = this.handleChangeEmail.bind(this);
+		this.handleChangePassword = this.handleChangePassword.bind(this);
+
+	}
+
+	handleLoginSubmit(event) {
+		event.preventDefault();
+		this.setState({ isLoggedIn: true });
+	}
+
+	handleChangeEmail(event) {
+		this.setState({ email: event.target.value });
+		if (event.target.value.length > 0 && this.state.password.length > 0) {
+			this.setState({ enableSumit: true })
+		} else {
+			this.setState({ enableSumit: false })
+		}
+	}
+
+	handleChangePassword(event) {
+		this.setState({ password: event.target.value });
+		if (event.target.value.length > 0 && this.state.email.length > 0) {
+			this.setState({ enableSumit: true })
+		} else {
+			this.setState({ enableSumit: false })
+		}
+	}
+
+	render () {
+		return (
+			<React.Fragment>
+				<div className={css(styles.Login)}>
+					<p>Login to access to the full dashboard</p>
+					<form action='' onSubmit={this.handleLoginSubmit}>
+						<div className={css(styles.inputGroup)}> 
+							<label htmlFor="email" >Email:</label>
+							<input
+								id="email"
+								type="email"
+								className={css(styles.LoginInput)}
+								value={this.state.email}
+								onChange={this.handleChangeEmail}
+							/>
+						</div>
+						<div className={css(styles.inputGroup)}>
+							<label htmlFor="password" >Password:</label>
+							<input
+								id="password"
+								type="password"
+								className={css(styles.LoginInput)}
+								value={this.state.password}
+								onChange={this.handleChangePassword}
+							/>
+						</div>
+						<input type='submit' value='Ok' disabled={!this.state.enableSumit} className={css(styles.loginButton)} />
+					</form>
+				</div>
+			</React.Fragment>
+		);
+	}
 }
-const screenSize = {
-  small: "@media screen and (max-width: 900px)",
+
+const responsive = {
+	small: '@media screen and (max-width: 900px)'
 };
+
 const styles = StyleSheet.create({
-  login: {
-    margin: "50px",
-    flexGrow: 1,
-    [screenSize.small]: {
-      marginTop: "10px",
-      marginLeft: 0,
-      marginRight: 0,
-      marginBottom: 0,
-    },
-  },
-  loginInput: {
-    marginLeft: "10px",
-    marginRight: "20px",
-    [screenSize.small]: {
-      display: "block",
-      marginLeft: 0,
-      marginTop: "10px",
-      marginBottom: "10px",
-    },
-  },
+	Login: {
+		fontFamily: 'Arial, Helvetica, sans-serif',
+		padding: '50px',
+		[responsive.small]: {
+			padding: 0
+		}
+	},
+
+	Loginp: {
+		top: '3rem',
+		left: '2.5rem'
+	},
+
+	Logindiv: {
+		marginLeft: '-5px',
+		marginTop: '15px'
+	},
+
+	LoginInput: {
+		margin: '5px',
+		[responsive.small]: {
+			border: 'none'
+		}
+	},
+
+	inputGroup: {
+		display: 'inline',
+		[responsive.small]: {
+			display: 'flex'
+		}
+	},
+
+	loginButton: {
+		[responsive.small]: {
+			border: '3px solid orange',
+			borderRadius: '5px',
+			
+		}
+	}
 });
-export default Login
+
+export default Login;
