@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import App from './App';
 import Header from './Header/Header';
 import Login from './Login/Login';
@@ -27,4 +27,21 @@ describe('display when logged in', () => {
     expect(wrapper.find(CourseList).exists()).toBeTruthy();
     expect(wrapper.find(Login).exists()).not.toBeTruthy();
   });
+})
+
+describe('testing App as a class component', () => {
+  it('control+h test', () => {
+    const alertMock = jest.fn();
+  
+    const spy = jest.spyOn(App.prototype, 'componentDidMount');
+    const wrapper = mount(<App isLoggedIn="true" />);
+    expect(spy).toHaveBeenCalled();
+    const event = new KeyboardEvent('keydown', {
+      key: 'control',
+    });
+
+    spy.mockReset();
+    spy.mockRestore();
+    jest.clearAllMocks()
+  })
 })
